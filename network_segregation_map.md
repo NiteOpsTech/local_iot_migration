@@ -1,18 +1,48 @@
-# 🌐 NiteOpsTech Home Laboratory: IoT Network Segregation Layout
+# NiteOpsTech Home Lab: IoT Network Segregation Layout
 
-## 🏗️ VLAN Architecture Topology
-To enforce an absolute zero-trust framework, network assets are divided into strict virtual broadcast domains managed via an upstream firewall.
+This document models a defensive home-lab segmentation plan for local IoT
+devices. The inventory uses synthetic lab identifiers and RFC1918 addresses.
 
-| VLAN ID | Subnet Mask | Classification | Security Target State |
+## VLAN Architecture
+
+| VLAN ID | CIDR | Classification | Security Target State |
 | :--- | :--- | :--- | :--- |
-| **VLAN 10** | `10.10.10.0/24` | Management / Core | Primary workstation (BlackBox), RHEL server instances, and trusted engineering platforms. |
-| **VLAN 20** | `10.10.20.0/24` | Trusted LAN | Primary consumer mobile devices, computing endpoints, and media units. |
-| **VLAN 30** | `10.10.30.0/24` | Isolated IoT Mesh | Smarthome devices, Blink integration points, and localized video substreams. |
+| VLAN 10 | `10.10.10.0/24` | Management / Core | Primary workstation, RHEL lab host, administrative tooling. |
+| VLAN 20 | `10.10.20.0/24` | Trusted LAN | Personal endpoints, media systems, normal user devices. |
+| VLAN 30 | `10.10.30.0/24` | Isolated IoT Mesh | Cameras, smart hubs, local streaming endpoints, Scrypted integration. |
 
----
+## Firewall Intent
 
-## 🛡️ Stateful Ingress/Egress Firewall Intercept Matrix
+1. **IoT-to-Core Drops**
+   - Deny traffic from VLAN 30 to VLAN 10.
+   - Deny traffic from VLAN 30 to VLAN 20.
 
-1. **Rule Block 01 (IoT-to-Core Drops):** Explicitly DROP all traffic originating from **VLAN 30 (IoT)** targeting **VLAN 10 (Management)** or **VLAN 20 (LAN)**. 
-2. **Rule Block 02 (Cross-VLAN Management):** ALLOW traffic originating from **VLAN 10** to establish stateful connections into **VLAN 30** (enabling your workstation to manage the cameras local endpoints).
-3. **Rule Block 03 (WAN Restrictions):** DENY all outbound external internet routes for local video processing hubs once stream ingestion keys are mapped to the **Scrypted** local engine.
+2. **Controlled Management**
+   - Allow stateful management from VLAN 10 to approved VLAN 30 endpoints.
+   - Log management flows for review.
+
+3. **WAN Restrictions**
+   - Restrict IoT egress after local ingestion is validated.
+   - Prefer explicit allowlists over broad outbound access.
+
+4. **Telemetry**
+   - Export firewall events to the NanoMesh ETL chain.
+   - Preserve source VLAN, source IP, destination IP, destination port, and action.
+
+## NanoMesh Role
+
+This repo is Level 6 in the NanoMesh support chain:
+
+```text
+asset inventory
+-> VLAN segmentation map
+-> firewall event expectations
+-> ETL/detection/SOAR validation
+```
+
+## Safety Boundary
+
+- This is a planning and validation repo.
+- It does not configure a live router or firewall.
+- It does not contain real credentials.
+- It should not contain real public IP addresses, passwords, or production RTSP tokens.

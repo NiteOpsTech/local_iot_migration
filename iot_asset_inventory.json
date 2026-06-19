@@ -2,15 +2,16 @@
   "inventory_metadata": {
     "organization": "NiteOpsTech Home Labs",
     "scope": "IoT Migration and Decoupling Project",
-    "last_audit_date": "2026-05-27"
+    "last_audit_date": "2026-06-19",
+    "classification": "synthetic lab inventory"
   },
   "network_assets": [
     {
       "asset_id": "IOT-CAM-01",
       "device_type": "Smart Security Camera",
-      "vendor": "Blink",
-      "model": "Outdoor 3rd Gen",
-      "mac_address": "00:1A:2B:3C:4D:5E",
+      "vendor": "LabCamera",
+      "model": "Outdoor-Simulated",
+      "mac_address": "02:00:00:00:30:51",
       "network_configuration": {
         "assigned_vlan": 30,
         "ip_address": "10.10.30.51",
@@ -19,16 +20,16 @@
       "integration_telemetry": {
         "target_platform": "Scrypted",
         "ingestion_method": "RTSP Substream",
-        "local_stream_url": "rtsp://10.10.30.51:554/live/ch0",
-        "cloud_status": "DEACTIVATED"
+        "local_stream_url": "rtsp://10.10.30.51:554/lab/ch0",
+        "cloud_status": "restricted"
       }
     },
     {
       "asset_id": "IOT-CAM-02",
       "device_type": "Smart Security Camera",
-      "vendor": "Blink",
-      "model": "Outdoor 3rd Gen",
-      "mac_address": "00:1A:2B:3C:4D:5F",
+      "vendor": "LabCamera",
+      "model": "Outdoor-Simulated",
+      "mac_address": "02:00:00:00:30:52",
       "network_configuration": {
         "assigned_vlan": 30,
         "ip_address": "10.10.30.52",
@@ -37,16 +38,16 @@
       "integration_telemetry": {
         "target_platform": "Scrypted",
         "ingestion_method": "RTSP Substream",
-        "local_stream_url": "rtsp://10.10.30.52:554/live/ch0",
-        "cloud_status": "DEACTIVATED"
+        "local_stream_url": "rtsp://10.10.30.52:554/lab/ch0",
+        "cloud_status": "restricted"
       }
     },
     {
       "asset_id": "IOT-GW-01",
       "device_type": "IoT Smart Hub",
-      "vendor": "Blink",
-      "model": "Sync Module 2",
-      "mac_address": "00:1A:2B:6F:7E:8D",
+      "vendor": "LabGateway",
+      "model": "Sync-Simulated",
+      "mac_address": "02:00:00:00:30:10",
       "network_configuration": {
         "assigned_vlan": 30,
         "ip_address": "10.10.30.10",
@@ -56,7 +57,7 @@
         "target_platform": "Scrypted",
         "ingestion_method": "API Coordinator Link",
         "local_stream_url": "N/A",
-        "cloud_status": "RESTRICTED_EGRESS"
+        "cloud_status": "restricted_egress"
       }
     }
   ]
